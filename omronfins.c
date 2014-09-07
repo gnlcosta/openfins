@@ -347,3 +347,52 @@ int OmronWriteBitMem(int plc_id, char type, unsigned short addr, char bit, short
 {
     return -1;
 }
+
+
+#ifdef MAIN
+int main(int argc, char *argv[])
+{
+    int id;
+    short data[2], i;
+    char model[30];
+    char version[30];
+    unsigned short start, error;
+    
+    i = 0;
+    error = 0;
+    start = 0;
+    OmronInit();
+    id = OmronOpen("192.168.250.1", 9600, 0, 1);
+    if (id != -1) {
+        if (OmronReadControllerModel(id, model, version) == 0)
+            printf("PLC: %s [%s]\n", model, version);
+        while (1) {
+#if 1
+            if (OmronReadMem(id, 'C', 100, 2, data) == 0) {
+                printf("Time: %i", (unsigned short)data[0]);
+                
+                if (start == 0)
+                    start = (unsigned short)data[0];
+                if (start != (unsigned short)data[0]) {
+                    printf(" dato: %i [%d]", data[1], data[1]/((unsigned short)data[0]-start));
+                    printf(" error: %i", error);
+                }
+                printf("\n");
+            }
+            else
+                error++;
+#endif
+            if (i>5) {
+                if (OmronWriteMem(id, 'D', 101, 1, &i) == 0)
+                    ;//printf("ok\n");
+                else
+                    error++;
+            }
+            i++;
+            //sleep(1);
+        }
+    }
+    
+    return 0;
+}
+#endif
