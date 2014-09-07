@@ -23,7 +23,7 @@
  
 #ifndef _OMRONFINS_PRIV_H_
 #define _OMRONFINS_PRIV_H_
- 
+
 int OmronInit(void);
 int OmronOpen(char *ip, unsigned short port, char tcp, unsigned char net_addr);
 int OmronClose(int plc_id);
