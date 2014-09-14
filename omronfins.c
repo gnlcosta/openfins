@@ -249,8 +249,24 @@ int OmronReadMem(int plc_id, char type, unsigned short addr, short num, short *d
     cmd.hdr.mrc = MRC_MEMORY;
     cmd.hdr.src = SRC_MEMORY_READ;
     switch (type) {
+    case 'A':
+        cmd.area = 0xB3;
+        break;
+        
+    case 'C':
+        cmd.area = 0xB0;
+        break;
+        
     case 'D':
         cmd.area = 0x82;
+        break;
+        
+    case 'H':
+        cmd.area = 0xB2 ;
+        break;
+        
+    case 'W':
+        cmd.area = 0xB1;
         break;
     }
     cmd.addr = htons(addr);
@@ -295,11 +311,30 @@ int OmronWriteMem(int plc_id, char type, unsigned short addr, short num, short *
     cmd.hdr.mrc = MRC_MEMORY;
     cmd.hdr.src = SRC_MEMORY_WRITE;
     switch (type) {
+    case 'A':
+        cmd.area = 0xB3;
+        dim = 2;
+        break;
+        
+    case 'C':
+        cmd.area = 0xB0;
+        dim = 2;
+        break;
+        
     case 'D':
         cmd.area = 0x82;
         dim = 2;
         break;
         
+    case 'H':
+        cmd.area =0xB2;
+        dim = 2;
+        break;
+        
+    case 'W':
+        cmd.area = 0xB1;
+        dim = 2;
+        break;
     }
     cmd.addr = htons(addr);
     cmd.bit = 0x00;
@@ -383,7 +418,7 @@ int main(int argc, char *argv[])
                 error++;
 #endif
             if (i>5) {
-                if (OmronWriteMem(id, 'D', 101, 1, &i) == 0)
+                if (OmronWriteMem(id, 'C', 101, 1, &i) == 0)
                     ;//printf("ok\n");
                 else
                     error++;
