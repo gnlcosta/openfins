@@ -1,8 +1,12 @@
 # OpenFins
 This library implements FINS protocol both over UDP and TCP
+
 OS supported:
   - Linux
-
+  
+Status:
+  - UDP working
+  - TCP in developing
 
 # Compiling
 Use make to compile the library 
