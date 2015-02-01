@@ -250,22 +250,27 @@ int OmronReadMem(int plc_id, char type, unsigned short addr, short num, short *d
     cmd.hdr.src = SRC_MEMORY_READ;
     switch (type) {
     case 'A':
+    case 'a':
         cmd.area = 0xB3;
         break;
         
     case 'C':
+    case 'c':
         cmd.area = 0xB0;
         break;
         
     case 'D':
+    case 'd':
         cmd.area = 0x82;
         break;
         
     case 'H':
+    case 'h':
         cmd.area = 0xB2 ;
         break;
         
     case 'W':
+    case 'w':
         cmd.area = 0xB1;
         break;
     }
@@ -312,26 +317,31 @@ int OmronWriteMem(int plc_id, char type, unsigned short addr, short num, short *
     cmd.hdr.src = SRC_MEMORY_WRITE;
     switch (type) {
     case 'A':
+    case 'a':
         cmd.area = 0xB3;
         dim = 2;
         break;
         
     case 'C':
+    case 'c':
         cmd.area = 0xB0;
         dim = 2;
         break;
         
     case 'D':
+    case 'd':
         cmd.area = 0x82;
         dim = 2;
         break;
         
     case 'H':
+    case 'h':
         cmd.area =0xB2;
         dim = 2;
         break;
         
     case 'W':
+    case 'w':
         cmd.area = 0xB1;
         dim = 2;
         break;
